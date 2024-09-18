@@ -1,4 +1,5 @@
 from model import ActivityManager, Student
+from datetime import datetime
 
 
 def director_menu(activity_manager: ActivityManager):
