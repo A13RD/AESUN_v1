@@ -105,7 +105,13 @@ def student_menu(activity_manager: ActivityManager):
             else:
                 print("Estudiante o actividad no encontrados.")
 
-        elif choice == '4':
+        elif choice == '5':
+            student_name = input("Ingrese el nombre del estudiante a agregar: ")
+            student = activity_manager.add_student(student_name)
+            print(f"Estudiante '{student.name}' agregado con éxito.")
+
+        elif choice == '6':
+
             break
         else:
             print("Opción inválida. Intente de nuevo.")
