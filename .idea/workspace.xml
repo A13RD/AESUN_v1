@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ce3c673-4ab2-4fb3-a5b1-63704fb8bce3" name="Changes" comment="Test registro_horas">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="0ce3c673-4ab2-4fb3-a5b1-63704fb8bce3" name="Changes" comment="Clases Error y Registro">
       <change beforePath="$PROJECT_DIR$/sapiencia/registro_horas.py" beforeDir="false" afterPath="$PROJECT_DIR$/sapiencia/registro_horas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_registro_horas.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_registro_horas.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +184,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729985966405</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Clases Error y Registro">
+      <option name="closed" value="true" />
+      <created>1729986879638</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1729986879638</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -193,6 +201,7 @@
     <MESSAGE value="CreateRequirements" />
     <MESSAGE value="Test" />
     <MESSAGE value="Test registro_horas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test registro_horas" />
+    <MESSAGE value="Clases Error y Registro" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clases Error y Registro" />
   </component>
 </project>
