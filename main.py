@@ -1,5 +1,6 @@
-from model import ActivityManager
-from controller import director_menu, student_menu
+from sapiencia.model import ActivityManager
+from sapiencia.controller import director_menu, student_menu
+
 
 def main():
     activity_manager = ActivityManager()
@@ -22,6 +23,7 @@ def main():
             break
         else:
             print("Opción inválida. Por favor, intente de nuevo.")
+
 
 if __name__ == "__main__":
     main()
