@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ce3c673-4ab2-4fb3-a5b1-63704fb8bce3" name="Changes" comment="Test">
-      <change afterPath="$PROJECT_DIR$/test/test_registro_horas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="0ce3c673-4ab2-4fb3-a5b1-63704fb8bce3" name="Changes" comment="Test registro_horas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sapiencia/registro_horas.py" beforeDir="false" afterPath="$PROJECT_DIR$/sapiencia/registro_horas.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +46,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python tests.Python tests in test_registro_horas.py.executor": "Run",
     "Python.emotion_classifier.executor": "Run",
     "Python.test_registro_horas.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -178,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729465657734</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Test registro_horas">
+      <option name="closed" value="true" />
+      <created>1729985966405</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1729985966405</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -186,6 +192,7 @@
     <MESSAGE value="Unversioned Files" />
     <MESSAGE value="CreateRequirements" />
     <MESSAGE value="Test" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test" />
+    <MESSAGE value="Test registro_horas" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test registro_horas" />
   </component>
 </project>

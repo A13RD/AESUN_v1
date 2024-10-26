@@ -1,68 +1,22 @@
+from abc import ABC, abstractmethod
 import pandas as pd
+from datetime import datetime
 
 
-class RegistroHoras:
-    def __init__(self):
-        self.horas_registradas = []
+class RegistroError(Exception):
+    """Excepción personalizada para errores de registro."""
+    pass
 
-    def agregar_horas(self):
-        try:
-            horas = int(input("Introduce las horas a agregar: "))
-            info = input("Introduce información adicional (opcional): ")
-            self.horas_registradas.append({"Horas": horas, "Info": info})
-            print(f"{horas} horas agregadas con éxito.")
-        except ValueError:
-            print("Por favor, introduce un número válido.")
 
-    def reducir_horas(self):
-        try:
-            horas = int(input("Introduce las horas a reducir: "))
-            if self.total_horas() < horas:
-                print("No puedes reducir más horas de las que tienes registradas.")
-                return
+class Registro(ABC):
+    """Clase base abstracta para manejar registros."""
 
-            self.horas_registradas.append({"Horas": -horas, "Info": "Reducción de horas"})
-            print(f"{horas} horas reducidas con éxito.")
-        except ValueError:
-            print("Por favor, introduce un número válido.")
-
-    def total_horas(self):
-        return sum(entry["Horas"] for entry in self.horas_registradas)
-
+    @abstractmethod
     def mostrar_estado(self):
-        print("\n--- Estado de Horas ---")
-        for entry in self.horas_registradas:
-            print(f"Horas: {entry['Horas']}, Info: {entry['Info']}")
-        print(f"Total de horas: {self.total_horas()}")
+        """Método abstracto para mostrar el estado del registro."""
+        pass
 
-
-class RegistroAsistencia:
-    def __init__(self):
-        self.asistencias = []
-
-    def registrar_asistencia(self):
-        nombre = input("Introduce el nombre del estudiante: ")
-        fecha = input("Introduce la fecha (YYYY-MM-DD): ")
-        estado = input("Estado (Presente/Ausente): ").strip().capitalize()
-
-        if estado not in ["Presente", "Ausente"]:
-            print("Estado no válido. Debe ser 'Presente' o 'Ausente'.")
-            return
-
-        self.asistencias.append({"Nombre": nombre, "Fecha": fecha, "Estado": estado})
-        print("Asistencia registrada con éxito.")
-
-    def mostrar_asistencias(self):
-        if not self.asistencias:
-            print("No hay registros de asistencia.")
-            return
-
-        print("\n--- Registro de Asistencia ---")
-        for registro in self.asistencias:
-            print(f"Nombre: {registro['Nombre']}, Fecha: {registro['Fecha']}, Estado: {registro['Estado']}")
-
-    def exportar_a_excel(self):
-        df = pd.DataFrame(self.asistencias)
-        archivo = input("Introduce el nombre del archivo (sin .xlsx): ")
-        df.to_excel(f"{archivo}.xlsx", index=False)
-        print(f"Datos exportados a {archivo}.xlsx con éxito.")
+    @abstractmethod
+    def exportar_a_excel(self, nombre_archivo):
+        """Método abstracto para exportar registros a Excel."""
+        pass
