@@ -1,84 +1,48 @@
 import pytest
-from datetime import datetime
 from sapiencia.registro_horas import RegistroHoras, RegistroAsistencia, RegistroError
 
 
-def test_agregar_horas():
-    registro_horas = RegistroHoras()
-    registro_horas.agregar_horas(5, "Tarea A")
-    assert registro_horas.total_horas() == 5
-    assert registro_horas.horas_registradas[0]["Horas"] == 5
-    assert registro_horas.horas_registradas[0]["Info"] == "Tarea A"
+# RegistroHoras
+class TestRegistroHoras:
+    def test_agregar_horas_valido(self):
+        registro = RegistroHoras()
+        registro.agregar_horas(5)
+        assert registro.total_horas() == 5
+
+    def test_agregar_horas_invalido(self):
+        registro = RegistroHoras()
+        with pytest.raises(RegistroError, match="Las horas deben ser un número entero positivo."):
+            registro.agregar_horas(-3)
+
+    def test_reducir_horas_valido(self):
+        registro = RegistroHoras()
+        registro.agregar_horas(5)
+        registro.reducir_horas(3)
+        assert registro.total_horas() == 2
+
+    def test_reducir_horas_exceso(self):
+        registro = RegistroHoras()
+        registro.agregar_horas(2)
+        with pytest.raises(RegistroError, match="No puedes reducir más horas de las que tienes registradas."):
+            registro.reducir_horas(5)
 
 
-def test_reducir_horas():
-    registro_horas = RegistroHoras()
-    registro_horas.agregar_horas(10)
-    registro_horas.reducir_horas(3)
-    assert registro_horas.total_horas() == 7
+# RegistroAsistencia
+class TestRegistroAsistencia:
+    def test_registrar_asistencia_valida(self):
+        registro = RegistroAsistencia()
+        registro.registrar_asistencia("Juan", "2023-10-10", "Presente")
+        assert len(registro.asistencias) == 1
+        assert registro.asistencias[0]["Nombre"] == "Juan"
+        assert registro.asistencias[0]["Fecha"] == "2023-10-10"
+        assert registro.asistencias[0]["Estado"] == "Presente"
 
+    def test_registrar_asistencia_estado_invalido(self):
+        registro = RegistroAsistencia()
+        with pytest.raises(RegistroError, match="Estado no válido. Debe ser 'Presente' o 'Ausente'."):
+            registro.registrar_asistencia("Ana", "2023-10-10", "Tarde")
 
-def test_reducir_horas_exceso():
-    registro_horas = RegistroHoras()
-    registro_horas.agregar_horas(5)
-    with pytest.raises(RegistroError, match="No puedes reducir más horas de las que tienes registradas."):
-        registro_horas.reducir_horas(10)
-
-
-def test_agregar_horas_invalido():
-    registro_horas = RegistroHoras()
-    with pytest.raises(RegistroError, match="Las horas deben ser un número entero positivo."):
-        registro_horas.agregar_horas(-5)
-
-
-def test_registrar_asistencia():
-    registro_asistencia = RegistroAsistencia()
-    registro_asistencia.registrar_asistencia("Juan", "2024-10-25", "Presente")
-    assert len(registro_asistencia.asistencias) == 1
-    assert registro_asistencia.asistencias[0]["Nombre"] == "Juan"
-    assert registro_asistencia.asistencias[0]["Estado"] == "Presente"
-
-
-def test_registrar_asistencia_fecha_invalida():
-    registro_asistencia = RegistroAsistencia()
-    with pytest.raises(RegistroError, match="Formato de fecha inválido. Use 'YYYY-MM-DD'."):
-        registro_asistencia.registrar_asistencia("Juan", "25-10-2024", "Presente")
-
-
-def test_registrar_asistencia_estado_invalido():
-    registro_asistencia = RegistroAsistencia()
-    with pytest.raises(RegistroError, match="Estado no válido. Debe ser 'Presente' o 'Ausente'."):
-        registro_asistencia.registrar_asistencia("Juan", "2024-10-25", "Desconocido")
-
-
-def test_reducir_horas_exceso():
-    registro_horas = RegistroHoras()
-    registro_horas.agregar_horas(5)
-    with pytest.raises(RegistroError, match="No puedes reducir más horas de las que tienes registradas."):
-        registro_horas.reducir_horas(10)
-
-
-def test_agregar_horas_invalido():
-    registro_horas = RegistroHoras()
-    with pytest.raises(RegistroError, match="Las horas deben ser un número entero positivo."):
-        registro_horas.agregar_horas(-5)
-
-
-def test_registrar_asistencia():
-    registro_asistencia = RegistroAsistencia()
-    registro_asistencia.registrar_asistencia("Juan", "2024-10-25", "Presente")
-    assert len(registro_asistencia.asistencias) == 1
-    assert registro_asistencia.asistencias[0]["Nombre"] == "Juan"
-    assert registro_asistencia.asistencias[0]["Estado"] == "Presente"
-
-
-def test_registrar_asistencia_fecha_invalida():
-    registro_asistencia = RegistroAsistencia()
-    with pytest.raises(RegistroError, match="Formato de fecha inválido. Use 'YYYY-MM-DD'."):
-        registro_asistencia.registrar_asistencia("Juan", "25-10-2024", "Presente")
-
-
-def test_registrar_asistencia_estado_invalido():
-    registro_asistencia = RegistroAsistencia()
-    with pytest.raises(RegistroError, match="Estado no válido. Debe ser 'Presente' o 'Ausente'."):
-        registro_asistencia.registrar_asistencia("Juan", "2024-10-25", "Desconocido")
+    def test_registrar_asistencia_fecha_invalida(self):
+        registro = RegistroAsistencia()
+        with pytest.raises(RegistroError, match="Formato de fecha inválido. Use 'YYYY-MM-DD'."):
+            registro.registrar_asistencia("Luis", "10-10-2023", "Ausente")

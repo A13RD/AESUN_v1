@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ce3c673-4ab2-4fb3-a5b1-63704fb8bce3" name="Changes" comment="Clases Error y Registro">
+    <list default="true" id="0ce3c673-4ab2-4fb3-a5b1-63704fb8bce3" name="Changes" comment="Correccion test">
+      <change beforePath="$PROJECT_DIR$/.idea/AEUN_v1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AEUN_v1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sapiencia/registro_horas.py" beforeDir="false" afterPath="$PROJECT_DIR$/sapiencia/registro_horas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test_registro_horas.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_registro_horas.py" afterDir="false" />
     </list>
@@ -47,12 +49,15 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python tests.Python tests in test_registro_horas.py.executor": "Run",
+    "Python tests.pytest for test_registro_horas.TestRegistroAsistencia.executor": "Run",
+    "Python tests.pytest for test_registro_horas.TestRegistroHoras.executor": "Run",
+    "Python tests.pytest for test_registro_horas.TestRegistroHoras.test_agregar_horas_valido.executor": "Run",
     "Python.emotion_classifier.executor": "Run",
     "Python.test_registro_horas.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/USUARIO/PycharmProjects/AESUN_v1",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -60,29 +65,7 @@
       <recent name="C:\Users\USUARIO\PycharmProjects\AESUN_v1" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in test_registro_horas.py">
-    <configuration name="emotion_classifier" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="AEUN_v1" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emotion_classifier.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python tests.pytest for test_registro_horas.TestRegistroAsistencia">
     <configuration name="test_registro_horas" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AEUN_v1" />
       <option name="ENV_FILES" value="" />
@@ -120,11 +103,64 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest for test_registro_horas.TestRegistroAsistencia" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="AEUN_v1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_registro_horas.TestRegistroAsistencia&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_registro_horas.TestRegistroHoras" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="AEUN_v1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_registro_horas.TestRegistroHoras&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_registro_horas.TestRegistroHoras.test_agregar_horas_valido" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="AEUN_v1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_registro_horas.TestRegistroHoras.test_agregar_horas_valido&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for test_registro_horas.TestRegistroAsistencia" />
+        <item itemvalue="Python tests.pytest for test_registro_horas.TestRegistroHoras.test_agregar_horas_valido" />
+        <item itemvalue="Python tests.pytest for test_registro_horas.TestRegistroHoras" />
         <item itemvalue="Python tests.Python tests in test_registro_horas.py" />
         <item itemvalue="Python.test_registro_horas" />
-        <item itemvalue="Python.emotion_classifier" />
       </list>
     </recent_temporary>
   </component>
@@ -192,7 +228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729986879638</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Correccion test">
+      <option name="closed" value="true" />
+      <created>1729987133553</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1729987133553</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -202,6 +246,7 @@
     <MESSAGE value="Test" />
     <MESSAGE value="Test registro_horas" />
     <MESSAGE value="Clases Error y Registro" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clases Error y Registro" />
+    <MESSAGE value="Correccion test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correccion test" />
   </component>
 </project>
