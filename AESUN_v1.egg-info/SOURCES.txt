@@ -1,0 +1,12 @@
+README.md
+setup.py
+AESUN_v1.egg-info/PKG-INFO
+AESUN_v1.egg-info/SOURCES.txt
+AESUN_v1.egg-info/dependency_links.txt
+AESUN_v1.egg-info/requires.txt
+AESUN_v1.egg-info/top_level.txt
+test/__init__.py
+test/test_controler.py
+test/test_emotion_classifier.py
+test/test_model.py
+test/test_registro_horas.py

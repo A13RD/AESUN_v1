@@ -1,6 +1,10 @@
+import pdb
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List, Optional
+import uuid
+
+import pandas as pd
 
 
 @dataclass
@@ -88,14 +92,42 @@ class ActivityManager:
                 return student
         return None
 
+    def export_activities(self):
+        data = {"name": [], "id": [], "date": [], "registered_students": [], "max_students": []}
+        for activity in self.activities:
+            name = activity.name
+            id = activity.id
+            date = activity.date
+            max_students = activity.max_students
+            registered_students = len(activity.registered_students)
+            data["name"].append(name)
+            data["id"].append(id)
+            data["date"].append(date)
+            data["max_students"].append(max_students)
+            data["registered_students"].append(registered_students)
+
+        df = pd.DataFrame(data)
+        df.to_excel("Activities_Excel.xlsx", index=False)
+
+class ChatBot:
+    def write_response(self, conversation: List[str]) -> str:
+        return "ToDo"
 
 @dataclass
-class Student:
+class Person:
+    name: str
+    id: str
+
+
+@dataclass
+class Student(Person):
     def __init__(self, name: str):
-        self.name = name
+        super().__init__(name, uuid.uuid4()) #str de numeros y letras unicos
         self.total_hours = 0
         self.activities = []
         self.hours_per_activity = {}
+        self.conversation = []
+        self.chatbot = ChatBot()
 
     def add_hours(self, activity: Activity, hours: int) -> Optional[str]:
         if activity not in self.activities:
@@ -124,3 +156,14 @@ class Student:
         print("Horas por actividad:")
         for activity_id, hours in self.hours_per_activity.items():
             print(f"Actividad ID {activity_id}: {hours} horas")
+
+    def send_message(self, message: str) -> List[str]:
+        formatted_message = f"Estudiante: {message}"
+        self.conversation.append(formatted_message)
+        answer = self.chatbot.write_response(self.conversation)
+        formatted_answer = f"ChatBot: {answer}"
+        self.conversation.append(formatted_answer)
+        return self.conversation
+
+    def get_previous_conversations(self) -> List[str]:
+        return self.conversation

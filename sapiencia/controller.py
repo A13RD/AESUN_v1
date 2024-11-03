@@ -1,4 +1,4 @@
-from model import ActivityManager, Student
+from .model import ActivityManager
 from datetime import datetime
 
 
@@ -10,7 +10,8 @@ def director_menu(activity_manager: ActivityManager):
         print("3. Preinscribir estudiante")
         print("4. Eliminar estudiante de actividad")
         print("5. Agregar Estudiante")
-        print("6. Volver al menú principal")
+        print("6. Exportar a Excel")
+        print("7. Volver al menú principal")
 
         choice = input("Ingrese una opción: ")
 
@@ -59,6 +60,10 @@ def director_menu(activity_manager: ActivityManager):
             print(f"Estudiante '{student.name}' agregado con éxito.")
 
         elif choice == '6':
+            activity_manager.export_activities()
+            print("Actividades exportadas a Excel de manera Exitosa.")
+
+        elif choice == '7':
             break
         else:
             print("Opción inválida. Intente de nuevo.")
@@ -70,7 +75,8 @@ def student_menu(activity_manager: ActivityManager):
         print("1. Ver horas")
         print("2. Agregar horas")
         print("3. Reducir horas")
-        print("4. Volver al menú principal")
+        print("4. ChatBot")
+        print("5. Volver al menú principal")
 
         choice = input("Ingrese una opción: ")
 
@@ -113,6 +119,23 @@ def student_menu(activity_manager: ActivityManager):
                 print("Estudiante o actividad no encontrados.")
 
         elif choice == '4':
+            student_name = input("Nombre del estudiante: ")
+            student = activity_manager.get_student_by_name(student_name)
+            if student is None:
+                print("Estudiante no encontrado.")
+                break
+            output = f"Bienvenido al ChatBot"
+            previous_conversations = student.get_previous_conversations()
+            for mensaje in previous_conversations:
+                print(mensaje)
+
+            while output != "":
+                output = input("Estudiante: ")
+                if output != "":
+                    conversation = student.send_message(output)
+                    print(conversation.pop())
+
+        elif choice == '5':
 
             break
         else:
