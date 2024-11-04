@@ -14,6 +14,8 @@ class IA:
     Retorna:
     - str: respuesta generada por Gemini.
     """
+    prompt = f"Actúa como un asistente emocional. Alguien te dice: '{input_text}'. Responde con empatía y apoyo emocional."
+
 
 
 
