@@ -16,7 +16,11 @@ class IA:
         """
         # Define el prompt para asistencia emocional
         prompt = f"Actúa como un asistente emocional. Alguien te dice: '{input_text}'. Responde con empatía y apoyo emocional."
+        # Genera la respuesta con Gemini
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
 
+        return response.text
 
 
 # Ejemplo de uso
