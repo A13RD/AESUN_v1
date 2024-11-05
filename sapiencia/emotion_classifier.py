@@ -1,12 +1,18 @@
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
-load_dotenv('../.env')
-api_key = os.getenv("API_KEY")
-genai.configure(api_key=api_key)
+from typing import Optional
+
 class IA:
-    @staticmethod
-    def generar_respuesta_emocional(input_text):
+    def __init__(self):
+        load_dotenv('../.env')
+        api_key = os.getenv("API_KEY")
+        if not api_key:
+            raise ValueError ("API_KEY no encontrada en el archivo .env")
+        genai.configure(api_key=api_key)
+        self.model = genai.GenerativeModel("gemini-1.5-flash")
+
+    def generar_respuesta_emocional(self, input_text: str) -> Optional[str]:
         """
         Genera una respuesta emocional usando Gemini, actuando como un asistente de apoyo.
          Parámetros:
@@ -14,18 +20,16 @@ class IA:
          Retorna:
         - str: respuesta generada por Gemini.
         """
-        # Define el prompt para asistencia emocional
-        prompt = f"Actúa como un asistente emocional. Alguien te dice: '{input_text}'. Responde con empatía y apoyo emocional."
-        # Genera la respuesta con Gemini
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        response = model.generate_content(prompt)
+        try:
+            prompt = f"Actúa como un asistente emocional. Alguien te dice: '{input_text}'. Responde con empatía y apoyo emocional."
+            response = self.model.generate_content(prompt)
+            return response.text
 
-        return response.text
+        except Exception as e:
+            print(f"Error al generar respuesta: {str(e)}")
+            return None
 
-    # Ejemplo de uso
-    input_text = "Me siento un poco triste y solo últimamente. ¿Qué me aconsejas?"
-    respuesta = generar_respuesta_emocional(input_text)
-    print(respuesta)
+
 
 
 
