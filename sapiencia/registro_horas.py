@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 from datetime import datetime
+from typing import List, Dict, Union
 
 
 class RegistroError(Exception):
@@ -24,7 +25,7 @@ class Registro(ABC):
 
 class RegistroHoras(Registro):
     def __init__(self):
-        self.horas_registradas = []
+        self.horas_registradas: List[Dict[str, Union[int, str]]] = []
 
     def total_horas(self):
         return sum(entry["Horas"] for entry in self.horas_registradas)
@@ -53,14 +54,17 @@ class RegistroHoras(Registro):
             print(f"Horas: {registro['Horas']}, Info: {registro['Info']}")
 
     def exportar_a_excel(self, nombre_archivo):
-        df = pd.DataFrame(self.horas_registradas)
-        df.to_excel(f"{nombre_archivo}.xlsx", index=False)
-        print(f"Datos exportados a {nombre_archivo}.xlsx con éxito.")
+        try:
+            df = pd.DataFrame(self.horas_registradas)
+            df.to_excel(f"{nombre_archivo}.xlsx", index=False)
+            print(f"Datos exportados a {nombre_archivo}.xlsx con éxito.")
+        except Exception as e:
+            raise RegistroError(f"Error al exportar: {str(e)}")
 
 
 class RegistroAsistencia(Registro):
     def __init__(self):
-        self.asistencias = []
+        self.asistencias: List[Dict[str, str]] = []
 
     def registrar_asistencia(self, nombre, fecha, estado):
         if estado not in ["Presente", "Ausente"]:
@@ -71,7 +75,10 @@ class RegistroAsistencia(Registro):
         except ValueError:
             raise RegistroError("Formato de fecha inválido. Use 'YYYY-MM-DD'.")
 
-        self.asistencias.append({"Nombre": nombre, "Fecha": fecha_obj.strftime("%Y-%m-%d"), "Estado": estado})
+        self.asistencias.append({
+            "Nombre": nombre,
+            "Fecha": fecha_obj.strftime("%Y-%m-%d"),
+            "Estado": estado})
         print("Asistencia registrada con éxito.")
 
     def mostrar_estado(self):
@@ -84,6 +91,9 @@ class RegistroAsistencia(Registro):
             print(f"Nombre: {registro['Nombre']}, Fecha: {registro['Fecha']}, Estado: {registro['Estado']}")
 
     def exportar_a_excel(self, nombre_archivo):
-        df = pd.DataFrame(self.asistencias)
-        df.to_excel(f"{nombre_archivo}.xlsx", index=False)
-        print(f"Datos exportados a {nombre_archivo}.xlsx con éxito.")
+        try:
+            df = pd.DataFrame(self.asistencias)
+            df.to_excel(f"{nombre_archivo}.xlsx", index=False)
+            print(f"Datos exportados a {nombre_archivo}.xlsx con éxito.")
+        except Exception as e:
+            raise RegistroError(f"Error al exportar a excel: {str(e)}")
