@@ -22,11 +22,14 @@ class IA:
 
         return response.text
 
+    # Ejemplo de uso
+    input_text = "Me siento un poco triste y solo últimamente. ¿Qué me aconsejas?"
+    respuesta = generar_respuesta_emocional(input_text)
+    print(respuesta)
 
-# Ejemplo de uso
-input_text = "Me siento un poco triste y solo últimamente. ¿Qué me aconsejas?"
-respuesta = generar_respuesta_emocional(input_text)
-print(respuesta)
+
+
+
 
 
 
