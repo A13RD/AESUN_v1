@@ -9,6 +9,14 @@ class IA:
     def generar_respuesta_emocional(input_text):
         """
         Genera una respuesta emocional usando Gemini, actuando como un asistente de apoyo.
+         Parámetros:
+        - input_text (str): el texto de entrada que describe el estado emocional o la consulta del usuario.
+         Retorna:
+        - str: respuesta generada por Gemini.
+        """
+        # Define el prompt para asistencia emocional
+        prompt = f"Actúa como un asistente emocional. Alguien te dice: '{input_text}'. Responde con empatía y apoyo emocional."
+
 
 
 # Ejemplo de uso
