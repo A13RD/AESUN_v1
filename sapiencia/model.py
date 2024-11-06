@@ -1,9 +1,8 @@
-import pdb
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List, Optional
+from sapiencia.emotion_classifier import IA
 import uuid
-
 import pandas as pd
 
 
@@ -109,9 +108,14 @@ class ActivityManager:
         df = pd.DataFrame(data)
         df.to_excel("Activities_Excel.xlsx", index=False)
 
+
 class ChatBot:
-    def write_response(self, conversation: List[str]) -> str:
-        return "ToDo"
+    @staticmethod
+    def write_response(self, conversation: str) -> str:
+        assistence = IA()
+        response = assistence.generar_respuesta_emocional(conversation)
+        return response
+
 
 @dataclass
 class Person:
