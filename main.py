@@ -1,29 +1,18 @@
+import PySimpleGUI as sg
 from sapiencia.model import ActivityManager
-from sapiencia.controller import director_menu, student_menu
+from datetime import datetime
 
 
-def main():
-    activity_manager = ActivityManager()
+class SapienciaGUI:
+    def __init__(self):
+        self.activity_manager = ActivityManager()
+        sg.theme('LightGrey1')
 
-    while True:
-        print("Bienvenido a la Aplicación Estudiantes Sapiencia")
-        print("Seleccione su rol:")
-        print("1. Director")
-        print("2. Estudiante")
-        print("3. Salir")
-
-        choice = input("Ingrese una opción: ")
-
-        if choice == '1':
-            director_menu(activity_manager)
-        elif choice == '2':
-            student_menu(activity_manager)
-        elif choice == '3':
-            print("Gracias por usar la aplicación.")
-            break
-        else:
-            print("Opción inválida. Por favor, intente de nuevo.")
-
-
-if __name__ == "__main__":
-    main()
+    def create_main_window(self):
+        layout = [
+            [sg.Text('Bienvenido a la Aplicación Estudiantes Sapiencia', font=('Helvetica', 16))],
+            [sg.Text('Seleccione su rol:', font=('Helvetica', 12))],
+            [sg.Button('Director', size=(20, 2)), sg.Button('Estudiante', size=(20, 2))],
+            [sg.Button('Salir', size=(10, 1))]
+        ]
+        return sg.Window('Sapiencia', layout, finalize=True)
