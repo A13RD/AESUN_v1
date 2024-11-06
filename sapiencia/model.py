@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List, Optional
-from sapiencia.emotion_classifier import IA
+from sapiencia.clasificador_emocional import IA
 import uuid
 import pandas as pd
 
