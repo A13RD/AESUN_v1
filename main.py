@@ -372,6 +372,10 @@ class SapienciaGUI:
 
                     main_window.close()
 
+if __name__ == '__main__':
+ app = SapienciaGUI()
+ app.run()
+
 
 
 
