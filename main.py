@@ -177,6 +177,28 @@ class SapienciaGUI:
             if event == 'Volver':
                 window.close()
                 main_window.un_hide()
+                # Director functions
+                if event == 'Añadir Actividad':
+                    add_window = self.add_activity_window()
+                    while True:
+                        event2, values2 = add_window.read()
+                        if event2 in (sg.WIN_CLOSED, 'Cancelar'):
+                            break
+                        if event2 == 'Guardar':
+                            try:
+                                name = values2['-NAME-']
+                                date = datetime.strptime(values2['-DATE-'], "%Y-%m-%d")
+                                max_students = int(values2['-MAX-'])
+                                guide = values2['-GUIDE-']
+                                presentation = values2['-PRES-']
+
+                                self.activity_manager.add_activity(name, date, max_students, guide, presentation)
+                                sg.popup('Actividad añadida con éxito')
+                                break
+                            except Exception as e:
+                                sg.popup_error(f'Error: {str(e)}')
+                    add_window.close()
+
 
 
 
