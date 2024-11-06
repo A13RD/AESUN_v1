@@ -153,6 +153,32 @@ class SapienciaGUI:
         ]
         return sg.Window('ChatBot', layout, finalize=True)
 
+    def run(self):
+        main_window = self.create_main_window()
+        director_window = None
+        student_window = None
+
+        while True:
+            window, event, values = sg.read_all_windows()
+
+            if event == sg.WIN_CLOSED or event == 'Salir':
+                window.close()
+                if window == main_window:
+                    break
+
+            if event == 'Director':
+                main_window.hide()
+                director_window = self.create_director_window()
+
+            if event == 'Estudiante':
+                main_window.hide()
+                student_window = self.create_student_window()
+
+            if event == 'Volver':
+                window.close()
+                main_window.un_hide()
+
+
 
 
 
