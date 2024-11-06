@@ -10,3 +10,5 @@ __pycache__/
 .vscode/
 
 sapiencia/.env
+
+AESUN_v1.egg-info/

@@ -1,6 +1,5 @@
 pandas==2.2.3
 numpy
-pytest==8.3.3
 openpyxl
 google-generativeai
 python-dotenv==1.0.0
