@@ -295,6 +295,81 @@ class SapienciaGUI:
                     hours_window.close()
 
                 if event == 'Agregar Horas':
+                    add_hours_window = self.add_hours_window()
+                    while True:
+                        event2, values2 = add_hours_window.read()
+                        if event2 in (sg.WIN_CLOSED, 'Cancelar'):
+                            break
+                        if event2 == 'Agregar Horas':
+                            try:
+                                student_name = values2['-STUDENT-']
+                                activity_id = int(values2['-ACTIVITY-'][0].split(':')[0])
+                                hours = int(values2['-HOURS-'])
+
+                                student = self.activity_manager.get_student_by_name(student_name)
+                                if student:
+                                    result = self.activity_manager.add_hours_to_student(activity_id, student, hours)
+                                    if result:
+                                        sg.popup_error(result)
+                                    else:
+                                        sg.popup(f'{hours} horas añadidas con éxito')
+                                        break
+                                else:
+                                    sg.popup_error('Estudiante no encontrado')
+                            except ValueError:
+                                sg.popup_error('Por favor ingrese un número válido de horas')
+                            except Exception as e:
+                                sg.popup_error(f'Error: {str(e)}')
+                        add_hours_window.close()
+
+                        if event == 'Reducir Horas':
+                            reduce_hours_window = self.reduce_hours_window()
+                            while True:
+                                event2, values2 = reduce_hours_window.read()
+                                if event2 in (sg.WIN_CLOSED, 'Cancelar'):
+                                    break
+                                if event2 == 'Reducir Horas':
+                                    try:
+                                        student_name = values2['-STUDENT-']
+                                        activity_id = int(values2['-ACTIVITY-'][0].split(':')[0])
+                                        hours = int(values2['-HOURS-'])
+
+                                        student = self.activity_manager.get_student_by_name(student_name)
+                                        if student:
+                                            result = self.activity_manager.reduce_hours_from_student(activity_id,
+                                                                                                     student,
+                                                                                                     hours)
+                                            if result:
+                                                sg.popup_error(result)
+                                            else:
+                                                sg.popup(f'{hours} horas reducidas con éxito')
+                                                break
+                                        else:
+                                            sg.popup_error('Estudiante no encontrado')
+                                    except ValueError:
+                                        sg.popup_error('Por favor ingrese un número válido de horas')
+                                    except Exception as e:
+                                        sg.popup_error(f'Error: {str(e)}')
+                            reduce_hours_window.close()
+
+                        if event == 'ChatBot':
+                            chatbot_window = self.chatbot_window()
+                            while True:
+                                event2, values2 = chatbot_window.read()
+                                if event2 in (sg.WIN_CLOSED, 'Salir'):
+                                    break
+                                if event2 == 'Enviar':
+                                    try:
+                                        student_name = values2['-STUDENT-']
+                                        message = values2['-INPUT-']
+                                        response = self.activity_manager.get_chatbot_response(student_name, message)
+                                        chatbot_window['-OUTPUT-'].print(f"{student_name}: {message}")
+                                        chatbot_window['-OUTPUT-'].print(f"ChatBot: {response}")
+                                        chatbot_window['-INPUT-'].update('')
+                                    except Exception as e:
+                                        sg.popup_error(f'Error: {str(e)}')
+                            chatbot_window.close()
+
 
 
 
