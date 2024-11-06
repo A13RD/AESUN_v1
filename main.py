@@ -16,3 +16,18 @@ class SapienciaGUI:
             [sg.Button('Salir', size=(10, 1))]
         ]
         return sg.Window('Sapiencia', layout, finalize=True)
+
+    def create_director_window(self):
+        layout = [
+            [sg.Text('Menú Director', font=('Helvetica', 14))],
+            [sg.Frame('Gestión de Actividades', [
+                [sg.Button('Añadir Actividad', size=(20, 1))],
+                [sg.Button('Ver Actividades', size=(20, 1))],
+                [sg.Button('Preinscribir Estudiante', size=(20, 1))],
+                [sg.Button('Eliminar Estudiante', size=(20, 1))],
+                [sg.Button('Agregar Estudiante', size=(20, 1))],
+                [sg.Button('Exportar a Excel', size=(20, 1))]
+            ])],
+            [sg.Button('Volver', size=(10, 1))]
+        ]
+        return sg.Window('Director', layout, finalize=True)
