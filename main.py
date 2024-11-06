@@ -370,6 +370,9 @@ class SapienciaGUI:
                                         sg.popup_error(f'Error: {str(e)}')
                             chatbot_window.close()
 
+                    main_window.close()
+
+
 
 
 
