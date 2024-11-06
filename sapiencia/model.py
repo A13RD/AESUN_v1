@@ -198,5 +198,3 @@ class Student(Person):
 
     def get_previous_conversations(self) -> List[str]:
         return self.conversation
-
-
