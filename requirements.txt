@@ -3,4 +3,5 @@ numpy
 pytest==8.3.3
 openpyxl
 google-generativeai
-python-dotenv
+python-dotenv==1.0.0
+PySimpleGUI==5.0.7
