@@ -177,202 +177,216 @@ class SapienciaGUI:
             if event == 'Volver':
                 window.close()
                 main_window.un_hide()
-
-            # Director functions
-            if event == 'Añadir Actividad':
-                add_window = self.add_activity_window()
-                while True:
-                    event2, values2 = add_window.read()
-                    if event2 in (sg.WIN_CLOSED, 'Cancelar'):
-                        break
-                    if event2 == 'Guardar':
-                        try:
-                            name = values2['-NAME-']
-                            date = datetime.strptime(values2['-DATE-'], "%Y-%m-%d")
-                            max_students = int(values2['-MAX-'])
-                            guide = values2['-GUIDE-']
-                            presentation = values2['-PRES-']
-
-                            self.activity_manager.add_activity(name, date, max_students, guide, presentation)
-                            sg.popup('Actividad añadida con éxito')
+                # Director functions
+                if event == 'Añadir Actividad':
+                    add_window = self.add_activity_window()
+                    while True:
+                        event2, values2 = add_window.read()
+                        if event2 in (sg.WIN_CLOSED, 'Cancelar'):
                             break
-                        except Exception as e:
-                            sg.popup_error(f'Error: {str(e)}')
-                add_window.close()
+                        if event2 == 'Guardar':
+                            try:
+                                name = values2['-NAME-']
+                                date = datetime.strptime(values2['-DATE-'], "%Y-%m-%d")
+                                max_students = int(values2['-MAX-'])
+                                guide = values2['-GUIDE-']
+                                presentation = values2['-PRES-']
 
-            if event == 'Ver Actividades':
-                view_window = self.view_activities_window()
-                while True:
-                    event2, values2 = view_window.read()
-                    if event2 in (sg.WIN_CLOSED, 'Cerrar'):
-                        break
-                view_window.close()
-
-            if event == 'Preinscribir Estudiante':
-                preinscribe_window = self.preinscribe_student_window()
-                while True:
-                    event2, values2 = preinscribe_window.read()
-                    if event2 in (sg.WIN_CLOSED, 'Cancelar'):
-                        break
-                    if event2 == 'Preinscribir':
-                        try:
-                            student_name = values2['-STUDENT-']
-                            activity_id = int(values2['-ACTIVITY-'][0].split(':')[0])
-                            student = self.activity_manager.add_student(student_name)
-                            result = self.activity_manager.preinscribe_student(activity_id, student)
-                            if result:
-                                sg.popup_error(result)
-                            else:
-                                sg.popup('Estudiante preinscrito con éxito')
+                                self.activity_manager.add_activity(name, date, max_students, guide, presentation)
+                                sg.popup('Actividad añadida con éxito')
                                 break
-                        except Exception as e:
-                            sg.popup_error(f'Error: {str(e)}')
-                preinscribe_window.close()
-
-            if event == 'Eliminar Estudiante':
-                remove_window = self.remove_student_window()
-                while True:
-                    event2, values2 = remove_window.read()
-                    if event2 in (sg.WIN_CLOSED, 'Cancelar'):
-                        break
-                    if event2 == 'Eliminar':
-                        try:
-                            student_name = values2['-STUDENT-']
-                            activity_id = int(values2['-ACTIVITY-'][0].split(':')[0])
-                            student = self.activity_manager.get_student_by_name(student_name)
-                            if student:
-                                result = self.activity_manager.remove_student_from_activity(activity_id, student)
-                                if result:
-                                    sg.popup_error(result)
-                                else:
-                                    sg.popup('Estudiante eliminado con éxito')
-                                    break
-                            else:
-                                sg.popup_error('Estudiante no encontrado')
-                        except Exception as e:
-                            sg.popup_error(f'Error: {str(e)}')
-                remove_window.close()
-
-            if event == 'Agregar Estudiante':
-                add_student_window = self.add_student_window()
-                while True:
-                    event2, values2 = add_student_window.read()
-                    if event2 in (sg.WIN_CLOSED, 'Cancelar'):
-                        break
-                    if event2 == 'Agregar':
-                        try:
-                            student_name = values2['-STUDENT-']
-                            student = self.activity_manager.add_student(student_name)
-                            sg.popup(f'Estudiante {student.name} agregado con éxito')
-                            break
-                        except Exception as e:
-                            sg.popup_error(f'Error: {str(e)}')
-                add_student_window.close()
-
-            if event == 'Exportar a Excel':
-                try:
-                    self.activity_manager.export_activities()
-                    sg.popup('Datos exportados a Excel con éxito')
-                except Exception as e:
-                    sg.popup_error(f'Error al exportar: {str(e)}')
-
-            # Student functions
-            if event == 'Ver Horas':
-                hours_window = self.student_hours_window()
-                while True:
-                    event2, values2 = hours_window.read()
-                    if event2 in (sg.WIN_CLOSED, 'Cancelar'):
-                        break
-                    if event2 == 'Ver Horas':
-                        try:
-                            student_name = values2['-STUDENT-']
-                            student = self.activity_manager.get_student_by_name(student_name)
-                            if student:
-                                student.view_hours()
-                            else:
-                                sg.popup_error('Estudiante no encontrado')
-                        except Exception as e:
-                            sg.popup_error(f'Error: {str(e)}')
-                hours_window.close()
-
-            if event == 'Agregar Horas':
-                add_hours_window = self.add_hours_window()
-                while True:
-                    event2, values2 = add_hours_window.read()
-                    if event2 in (sg.WIN_CLOSED, 'Cancelar'):
-                        break
-                    if event2 == 'Agregar Horas':
-                        try:
-                            student_name = values2['-STUDENT-']
-                            activity_id = int(values2['-ACTIVITY-'][0].split(':')[0])
-                            hours = int(values2['-HOURS-'])
-
-                            student = self.activity_manager.get_student_by_name(student_name)
-                            if student:
-                                result = self.activity_manager.add_hours_to_student(activity_id, student, hours)
-                                if result:
-                                    sg.popup_error(result)
-                                else:
-                                    sg.popup(f'{hours} horas añadidas con éxito')
-                                    break
-                            else:
-                                sg.popup_error('Estudiante no encontrado')
-                        except ValueError:
-                            sg.popup_error('Por favor ingrese un número válido de horas')
-                        except Exception as e:
-                            sg.popup_error(f'Error: {str(e)}')
-                    add_hours_window.close()
-
-                    if event == 'Reducir Horas':
-                        reduce_hours_window = self.reduce_hours_window()
+                            except Exception as e:
+                                sg.popup_error(f'Error: {str(e)}')
+                    add_window.close()
+                    if event == 'Ver Actividades':
+                        view_window = self.view_activities_window()
                         while True:
-                            event2, values2 = reduce_hours_window.read()
+                            event2, values2 = view_window.read()
+                            if event2 in (sg.WIN_CLOSED, 'Cerrar'):
+                                break
+                        view_window.close()
+
+                    if event == 'Preinscribir Estudiante':
+                        preinscribe_window = self.preinscribe_student_window()
+                        while True:
+                            event2, values2 = preinscribe_window.read()
                             if event2 in (sg.WIN_CLOSED, 'Cancelar'):
                                 break
-                            if event2 == 'Reducir Horas':
+                            if event2 == 'Preinscribir':
                                 try:
                                     student_name = values2['-STUDENT-']
                                     activity_id = int(values2['-ACTIVITY-'][0].split(':')[0])
-                                    hours = int(values2['-HOURS-'])
+                                    student = self.activity_manager.add_student(student_name)
+                                    result = self.activity_manager.preinscribe_student(activity_id, student)
+                                    if result:
+                                        sg.popup_error(result)
+                                    else:
+                                        sg.popup('Estudiante preinscrito con éxito')
+                                        break
+                                except Exception as e:
+                                    sg.popup_error(f'Error: {str(e)}')
+                        preinscribe_window.close()
 
+                    if event == 'Eliminar Estudiante':
+                        remove_window = self.remove_student_window()
+                        while True:
+                            event2, values2 = remove_window.read()
+                            if event2 in (sg.WIN_CLOSED, 'Cancelar'):
+                                break
+                            if event2 == 'Eliminar':
+                                try:
+                                    student_name = values2['-STUDENT-']
+                                    activity_id = int(values2['-ACTIVITY-'][0].split(':')[0])
                                     student = self.activity_manager.get_student_by_name(student_name)
                                     if student:
-                                        result = self.activity_manager.reduce_hours_from_student(activity_id, student,
-                                                                                                 hours)
+                                        result = self.activity_manager.remove_student_from_activity(activity_id,
+                                                                                                    student)
                                         if result:
                                             sg.popup_error(result)
                                         else:
-                                            sg.popup(f'{hours} horas reducidas con éxito')
+                                            sg.popup('Estudiante eliminado con éxito')
                                             break
                                     else:
                                         sg.popup_error('Estudiante no encontrado')
-                                except ValueError:
-                                    sg.popup_error('Por favor ingrese un número válido de horas')
                                 except Exception as e:
                                     sg.popup_error(f'Error: {str(e)}')
-                        reduce_hours_window.close()
+                        remove_window.close()
 
-                    if event == 'ChatBot':
-                        chatbot_window = self.chatbot_window()
-                        while True:
-                            event2, values2 = chatbot_window.read()
-                            if event2 in (sg.WIN_CLOSED, 'Salir'):
+                if event == 'Agregar Estudiante':
+                    add_student_window = self.add_student_window()
+                    while True:
+                        event2, values2 = add_student_window.read()
+                        if event2 in (sg.WIN_CLOSED, 'Cancelar'):
+                            break
+                        if event2 == 'Agregar':
+                            try:
+                                student_name = values2['-STUDENT-']
+                                student = self.activity_manager.add_student(student_name)
+                                sg.popup(f'Estudiante {student.name} agregado con éxito')
                                 break
-                            if event2 == 'Enviar':
-                                try:
-                                    student_name = values2['-STUDENT-']
-                                    message = values2['-INPUT-']
-                                    response = self.activity_manager.get_chatbot_response(student_name, message)
-                                    chatbot_window['-OUTPUT-'].print(f"{student_name}: {message}")
-                                    chatbot_window['-OUTPUT-'].print(f"ChatBot: {response}")
-                                    chatbot_window['-INPUT-'].update('')
-                                except Exception as e:
-                                    sg.popup_error(f'Error: {str(e)}')
-                        chatbot_window.close()
+                            except Exception as e:
+                                sg.popup_error(f'Error: {str(e)}')
+                    add_student_window.close()
 
-                main_window.close()
+                if event == 'Exportar a Excel':
+                    try:
+                        self.activity_manager.export_activities()
+                        sg.popup('Datos exportados a Excel con éxito')
+                    except Exception as e:
+                        sg.popup_error(f'Error al exportar: {str(e)}')
 
+                    # Student functions
+                if event == 'Ver Horas':
+                    hours_window = self.student_hours_window()
+                    while True:
+                        event2, values2 = hours_window.read()
+                        if event2 in (sg.WIN_CLOSED, 'Cancelar'):
+                            break
+                        if event2 == 'Ver Horas':
+                            try:
+                                student_name = values2['-STUDENT-']
+                                student = self.activity_manager.get_student_by_name(student_name)
+                                if student:
+                                    student.view_hours()
+                                else:
+                                    sg.popup_error('Estudiante no encontrado')
+                            except Exception as e:
+                                sg.popup_error(f'Error: {str(e)}')
+                    hours_window.close()
+
+                if event == 'Agregar Horas':
+                    add_hours_window = self.add_hours_window()
+                    while True:
+                        event2, values2 = add_hours_window.read()
+                        if event2 in (sg.WIN_CLOSED, 'Cancelar'):
+                            break
+                        if event2 == 'Agregar Horas':
+                            try:
+                                student_name = values2['-STUDENT-']
+                                activity_id = int(values2['-ACTIVITY-'][0].split(':')[0])
+                                hours = int(values2['-HOURS-'])
+
+                                student = self.activity_manager.get_student_by_name(student_name)
+                                if student:
+                                    result = self.activity_manager.add_hours_to_student(activity_id, student, hours)
+                                    if result:
+                                        sg.popup_error(result)
+                                    else:
+                                        sg.popup(f'{hours} horas añadidas con éxito')
+                                        break
+                                else:
+                                    sg.popup_error('Estudiante no encontrado')
+                            except ValueError:
+                                sg.popup_error('Por favor ingrese un número válido de horas')
+                            except Exception as e:
+                                sg.popup_error(f'Error: {str(e)}')
+                        add_hours_window.close()
+
+                        if event == 'Reducir Horas':
+                            reduce_hours_window = self.reduce_hours_window()
+                            while True:
+                                event2, values2 = reduce_hours_window.read()
+                                if event2 in (sg.WIN_CLOSED, 'Cancelar'):
+                                    break
+                                if event2 == 'Reducir Horas':
+                                    try:
+                                        student_name = values2['-STUDENT-']
+                                        activity_id = int(values2['-ACTIVITY-'][0].split(':')[0])
+                                        hours = int(values2['-HOURS-'])
+
+                                        student = self.activity_manager.get_student_by_name(student_name)
+                                        if student:
+                                            result = self.activity_manager.reduce_hours_from_student(activity_id,
+                                                                                                     student,
+                                                                                                     hours)
+                                            if result:
+                                                sg.popup_error(result)
+                                            else:
+                                                sg.popup(f'{hours} horas reducidas con éxito')
+                                                break
+                                        else:
+                                            sg.popup_error('Estudiante no encontrado')
+                                    except ValueError:
+                                        sg.popup_error('Por favor ingrese un número válido de horas')
+                                    except Exception as e:
+                                        sg.popup_error(f'Error: {str(e)}')
+                            reduce_hours_window.close()
+
+                        if event == 'ChatBot':
+                            chatbot_window = self.chatbot_window()
+                            while True:
+                                event2, values2 = chatbot_window.read()
+                                if event2 in (sg.WIN_CLOSED, 'Salir'):
+                                    break
+                                if event2 == 'Enviar':
+                                    try:
+                                        student_name = values2['-STUDENT-']
+                                        message = values2['-INPUT-']
+                                        response = self.activity_manager.get_chatbot_response(student_name, message)
+                                        chatbot_window['-OUTPUT-'].print(f"{student_name}: {message}")
+                                        chatbot_window['-OUTPUT-'].print(f"ChatBot: {response}")
+                                        chatbot_window['-INPUT-'].update('')
+                                    except Exception as e:
+                                        sg.popup_error(f'Error: {str(e)}')
+                            chatbot_window.close()
+
+                    main_window.close()
 
 if __name__ == '__main__':
-    app = SapienciaGUI()
-    app.run()
+ app = SapienciaGUI()
+ app.run()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
