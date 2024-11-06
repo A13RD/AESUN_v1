@@ -87,3 +87,17 @@ class SapienciaGUI:
         ]
         return sg.Window('Preinscribir Estudiante', layout, finalize=True)
 
+    def remove_student_window(self):
+        activities = self.activity_manager.view_activities()
+        activities_list = [f"{a.id}: {a.name}" for a in activities]
+
+        layout = [
+            [sg.Text('Eliminar Estudiante de Actividad', font=('Helvetica', 14))],
+            [sg.Text('Nombre del estudiante:'), sg.Input(key='-STUDENT-')],
+            [sg.Text('Seleccionar actividad:')],
+            [sg.Listbox(activities_list, size=(40, 6), key='-ACTIVITY-')],
+            [sg.Button('Eliminar'), sg.Button('Cancelar')]
+        ]
+        return sg.Window('Eliminar Estudiante', layout, finalize=True)
+
+
