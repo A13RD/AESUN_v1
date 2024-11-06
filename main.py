@@ -44,3 +44,46 @@ class SapienciaGUI:
             [sg.Button('Volver', size=(10, 1))]
         ]
         return sg.Window('Estudiante', layout, finalize=True)
+
+    def add_activity_window(self):
+        layout = [
+            [sg.Text('Añadir Nueva Actividad', font=('Helvetica', 14))],
+            [sg.Text('Nombre:'), sg.Input(key='-NAME-')],
+            [sg.Text('Fecha (YYYY-MM-DD):'), sg.Input(key='-DATE-')],
+            [sg.Text('Máximo de estudiantes:'), sg.Input(key='-MAX-')],
+            [sg.Text('Archivo guía:'), sg.Input(key='-GUIDE-'), sg.FileBrowse()],
+            [sg.Text('Presentación:'), sg.Input(key='-PRES-'), sg.FileBrowse()],
+            [sg.Button('Guardar'), sg.Button('Cancelar')]
+        ]
+        return sg.Window('Añadir Actividad', layout, finalize=True)
+
+    def view_activities_window(self):
+        activities = self.activity_manager.view_activities()
+        headers = ['ID', 'Nombre', 'Fecha', 'Max. Estudiantes', 'Estudiantes Inscritos']
+        data = [[a.id, a.name, a.date.strftime("%Y-%m-%d"), a.max_students, len(a.registered_students)] for a in
+                activities]
+
+        layout = [
+            [sg.Text('Lista de Actividades', font=('Helvetica', 14))],
+            [sg.Table(values=data,
+                      headings=headers,
+                      auto_size_columns=True,
+                      justification='center',
+                      num_rows=min(25, len(data)))],
+            [sg.Button('Cerrar')]
+        ]
+        return sg.Window('Ver Actividades', layout, finalize=True)
+
+    def preinscribe_student_window(self):
+        activities = self.activity_manager.view_activities()
+        activities_list = [f"{a.id}: {a.name}" for a in activities]
+
+        layout = [
+            [sg.Text('Preinscribir Estudiante', font=('Helvetica', 14))],
+            [sg.Text('Nombre del estudiante:'), sg.Input(key='-STUDENT-')],
+            [sg.Text('Seleccionar actividad:')],
+            [sg.Listbox(activities_list, size=(40, 6), key='-ACTIVITY-')],
+            [sg.Button('Preinscribir'), sg.Button('Cancelar')]
+        ]
+        return sg.Window('Preinscribir Estudiante', layout, finalize=True)
+
