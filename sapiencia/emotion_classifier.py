@@ -3,9 +3,10 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 from typing import Optional
 
+
 class IA:
     def __init__(self):
-        load_dotenv('../.env')
+        load_dotenv()
         api_key = os.getenv("API_KEY")
         if not api_key:
             raise ValueError ("API_KEY no encontrada en el archivo .env")
@@ -28,14 +29,4 @@ class IA:
         except Exception as e:
             print(f"Error al generar respuesta: {str(e)}")
             return None
-
-
-
-
-
-
-
-
-
-
 
