@@ -31,3 +31,16 @@ class SapienciaGUI:
             [sg.Button('Volver', size=(10, 1))]
         ]
         return sg.Window('Director', layout, finalize=True)
+
+    def create_student_window(self):
+        layout = [
+            [sg.Text('Menú Estudiante', font=('Helvetica', 14))],
+            [sg.Frame('Gestión de Horas', [
+                [sg.Button('Ver Horas', size=(20, 1))],
+                [sg.Button('Agregar Horas', size=(20, 1))],
+                [sg.Button('Reducir Horas', size=(20, 1))],
+                [sg.Button('ChatBot', size=(20, 1))]
+            ])],
+            [sg.Button('Volver', size=(10, 1))]
+        ]
+        return sg.Window('Estudiante', layout, finalize=True)
