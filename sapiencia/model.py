@@ -7,167 +7,167 @@ import pandas as pd
 
 
 @dataclass
-class Activity:
+class Actividad:
     id: int
-    name: str
-    date: datetime
-    max_students: int
-    registered_students: List['Student'] = field(default_factory=list)
-    guide_file: Optional[str] = None
-    presentation_file: Optional[str] = None
+    nombre: str
+    fecha: datetime
+    max_estudiantes: int
+    estudiantes_registrados: List['Estudiante'] = field(default_factory=list)
+    archivo_guia: Optional[str] = None
+    archivo_presentacion: Optional[str] = None
 
-    def register_student(self, student: 'Student') -> Optional[str]:
-        if len(self.registered_students) < self.max_students:
-            self.registered_students.append(student)
-            student.activities.append(self)
+    def registrar_estudiante(self, estudiante: 'Estudiante') -> Optional[str]:
+        if len(self.estudiantes_registrados) < self.max_estudiantes:
+            self.estudiantes_registrados.append(estudiante)
+            estudiante.actividades.append(self)
             return None
         else:
             return "No hay cupos disponibles para esta actividad."
 
-    def remove_student(self, student: 'Student') -> Optional[str]:
-        if student in self.registered_students:
-            self.registered_students.remove(student)
-            student.activities.remove(self)
+    def eliminar_estudiante(self, estudiante: 'Estudiante') -> Optional[str]:
+        if estudiante in self.estudiantes_registrados:
+            self.estudiantes_registrados.remove(estudiante)
+            estudiante.actividades.remove(self)
             return None
         else:
             return "El estudiante no está registrado en esta actividad."
 
 
 @dataclass
-class ActivityManager:
-    activities: List[Activity] = field(default_factory=list)
-    activity_id_counter: int = 0
-    students: List['Student'] = field(default_factory=list)
+class GestorDeActividades:
+    actividades: List[Actividad] = field(default_factory=list)
+    contador_id_actividad: int = 0
+    estudiantes: List['Estudiante'] = field(default_factory=list)
 
-    def add_activity(self, name: str, date: datetime, max_students: int,
-                     guide: Optional[str] = None, presentation: Optional[str] = None) -> Optional[str]:
-        self.activity_id_counter += 1
-        new_activity = Activity(
-            id=self.activity_id_counter,
-            name=name,
-            date=date,
-            max_students=max_students,
-            guide_file=guide,
-            presentation_file=presentation
+    def agregar_actividad(self, nombre: str, fecha: datetime, max_estudiantes: int,
+                          guia: Optional[str] = None, presentacion: Optional[str] = None) -> Optional[str]:
+        self.contador_id_actividad += 1
+        nueva_actividad = Actividad(
+            id=self.contador_id_actividad,
+            nombre=nombre,
+            fecha=fecha,
+            max_estudiantes=max_estudiantes,
+            archivo_guia=guia,
+            archivo_presentacion=presentacion
         )
-        self.activities.append(new_activity)
+        self.actividades.append(nueva_actividad)
         return None
 
-    def view_activities(self) -> List[Activity]:
-        return self.activities
+    def ver_actividades(self) -> List[Actividad]:
+        return self.actividades
 
-    def preinscribe_student(self, activity_id: int, student: 'Student') -> Optional[str]:
-        activity = self.get_activity_by_id(activity_id)
-        if activity:
-            result = activity.register_student(student)
-            return result
+    def preinscribir_estudiante(self, id_actividad: int, estudiante: 'Estudiante') -> Optional[str]:
+        actividad = self.obtener_actividad_por_id(id_actividad)
+        if actividad:
+            resultado = actividad.registrar_estudiante(estudiante)
+            return resultado
         else:
             return "Actividad no encontrada."
 
-    def remove_student_from_activity(self, activity_id: int, student: 'Student') -> Optional[str]:
-        activity = self.get_activity_by_id(activity_id)
-        if activity:
-            result = activity.remove_student(student)
-            return result
+    def eliminar_estudiante_de_actividad(self, id_actividad: int, estudiante: 'Estudiante') -> Optional[str]:
+        actividad = self.obtener_actividad_por_id(id_actividad)
+        if actividad:
+            resultado = actividad.eliminar_estudiante(estudiante)
+            return resultado
         else:
             return "Actividad no encontrada."
 
-    def get_activity_by_id(self, activity_id: int) -> Optional[Activity]:
-        for activity in self.activities:
-            if activity.id == activity_id:
-                return activity
+    def obtener_actividad_por_id(self, id_actividad: int) -> Optional[Actividad]:
+        for actividad in self.actividades:
+            if actividad.id == id_actividad:
+                return actividad
         return None
 
-    def add_student(self, student_name: str) -> 'Student':
-        student = self.get_student_by_name(student_name)
-        if not student:
-            student = Student(name=student_name)
-            self.students.append(student)
-        return student
+    def agregar_estudiante(self, nombre_estudiante: str) -> 'Estudiante':
+        estudiante = self.obtener_estudiante_por_nombre(nombre_estudiante)
+        if not estudiante:
+            estudiante = Estudiante(nombre=nombre_estudiante)
+            self.estudiantes.append(estudiante)
+        return estudiante
 
-    def get_student_by_name(self, student_name: str) -> Optional['Student']:
-        for student in self.students:
-            if student.name == student_name:
-                return student
+    def obtener_estudiante_por_nombre(self, nombre_estudiante: str) -> Optional['Estudiante']:
+        for estudiante in self.estudiantes:
+            if estudiante.nombre == nombre_estudiante:
+                return estudiante
         return None
 
-    def export_activities(self):
-        data = {"name": [], "id": [], "date": [], "registered_students": [], "max_students": []}
-        for activity in self.activities:
-            name = activity.name
-            id = activity.id
-            date = activity.date
-            max_students = activity.max_students
-            registered_students = len(activity.registered_students)
-            data["name"].append(name)
-            data["id"].append(id)
-            data["date"].append(date)
-            data["max_students"].append(max_students)
-            data["registered_students"].append(registered_students)
+    def exportar_actividades(self):
+        datos = {"nombre": [], "id": [], "fecha": [], "estudiantes_registrados": [], "max_estudiantes": []}
+        for actividad in self.actividades:
+            nombre = actividad.nombre
+            id = actividad.id
+            fecha = actividad.fecha
+            max_estudiantes = actividad.max_estudiantes
+            estudiantes_registrados = len(actividad.estudiantes_registrados)
+            datos["nombre"].append(nombre)
+            datos["id"].append(id)
+            datos["fecha"].append(fecha)
+            datos["max_estudiantes"].append(max_estudiantes)
+            datos["estudiantes_registrados"].append(estudiantes_registrados)
 
-        df = pd.DataFrame(data)
-        df.to_excel("Activities_Excel.xlsx", index=False)
+        df = pd.DataFrame(datos)
+        df.to_excel("Actividades_Excel.xlsx", index=False)
 
 
 class ChatBot:
     @staticmethod
-    def write_response(self, conversation: str) -> str:
-        assistence = IA()
-        response = assistence.generar_respuesta_emocional(conversation)
-        return response
+    def escribir_respuesta(self, conversacion: str) -> str:
+        asistencia = IA()
+        respuesta = asistencia.generar_respuesta_emocional(conversacion)
+        return respuesta
 
 
 @dataclass
-class Person:
-    name: str
+class Persona:
+    nombre: str
     id: str
 
 
 @dataclass
-class Student(Person):
-    def __init__(self, name: str):
-        super().__init__(name, uuid.uuid4()) #str de numeros y letras unicos
-        self.total_hours = 0
-        self.activities = []
-        self.hours_per_activity = {}
-        self.conversation = []
+class Estudiante(Persona):
+    def __init__(self, nombre: str):
+        super().__init__(nombre, uuid.uuid4()) #str de números y letras únicos
+        self.horas_totales = 0
+        self.actividades = []
+        self.horas_por_actividad = {}
+        self.conversacion = []
         self.chatbot = ChatBot()
 
-    def add_hours(self, activity: Activity, hours: int) -> Optional[str]:
-        if activity not in self.activities:
+    def agregar_horas(self, actividad: Actividad, horas: int) -> Optional[str]:
+        if actividad not in self.actividades:
             return "No estás inscrito en esta actividad."
-        self.total_hours += hours
-        self.hours_per_activity[activity.id] = self.hours_per_activity.get(activity.id, 0) + hours
+        self.horas_totales += horas
+        self.horas_por_actividad[actividad.id] = self.horas_por_actividad.get(actividad.id, 0) + horas
         return None
 
-    def reduce_hours(self, activity: Activity, hours: int) -> Optional[str]:
-        if activity not in self.activities:
+    def reducir_horas(self, actividad: Actividad, horas: int) -> Optional[str]:
+        if actividad not in self.actividades:
             return "No estás inscrito en esta actividad."
-        current_hours = self.hours_per_activity.get(activity.id, 0)
-        if hours > current_hours:
+        horas_actuales = self.horas_por_actividad.get(actividad.id, 0)
+        if horas > horas_actuales:
             return "No puedes reducir más horas de las que tienes asignadas."
-        self.total_hours -= hours
-        self.hours_per_activity[activity.id] -= hours
-        if self.hours_per_activity[activity.id] == 0:
-            del self.hours_per_activity[activity.id]
+        self.horas_totales -= horas
+        self.horas_por_actividad[actividad.id] -= horas
+        if self.horas_por_actividad[actividad.id] == 0:
+            del self.horas_por_actividad[actividad.id]
         return None
 
-    def view_hours(self):
-        print(f"\nHoras totales asignadas: {self.total_hours}")
-        if not self.hours_per_activity:
+    def ver_horas(self):
+        print(f"\nHoras totales asignadas: {self.horas_totales}")
+        if not self.horas_por_actividad:
             print("No tienes horas asignadas a ninguna actividad.")
             return
         print("Horas por actividad:")
-        for activity_id, hours in self.hours_per_activity.items():
-            print(f"Actividad ID {activity_id}: {hours} horas")
+        for id_actividad, horas in self.horas_por_actividad.items():
+            print(f"Actividad ID {id_actividad}: {horas} horas")
 
-    def send_message(self, message: str) -> List[str]:
-        formatted_message = f"Estudiante: {message}"
-        self.conversation.append(formatted_message)
-        answer = self.chatbot.write_response(self.conversation)
-        formatted_answer = f"ChatBot: {answer}"
-        self.conversation.append(formatted_answer)
-        return self.conversation
+    def enviar_mensaje(self, mensaje: str) -> List[str]:
+        mensaje_formateado = f"Estudiante: {mensaje}"
+        self.conversacion.append(mensaje_formateado)
+        respuesta = self.chatbot.escribir_respuesta(self.conversacion)
+        mensaje_respuesta_formateado = f"ChatBot: {respuesta}"
+        self.conversacion.append(mensaje_respuesta_formateado)
+        return self.conversacion
 
-    def get_previous_conversations(self) -> List[str]:
-        return self.conversation
+    def obtener_conversaciones_previas(self) -> List[str]:
+        return self.conversacion
