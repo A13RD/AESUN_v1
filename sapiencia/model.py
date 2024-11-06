@@ -111,7 +111,7 @@ class GestorDeActividades:
 
 class ChatBot:
     @staticmethod
-    def escribir_respuesta(self, conversacion: str) -> str:
+    def escribir_respuesta(conversacion: str) -> str:
         asistencia = IA()
         respuesta = asistencia.generar_respuesta_emocional(conversacion)
         return respuesta
