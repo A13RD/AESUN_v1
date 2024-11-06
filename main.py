@@ -130,6 +130,30 @@ class SapienciaGUI:
         ]
         return sg.Window('Agregar Horas', layout, finalize=True)
 
+    def reduce_hours_window(self):
+        activities = self.activity_manager.view_activities()
+        activities_list = [f"{a.id}: {a.name}" for a in activities]
+
+        layout = [
+            [sg.Text('Reducir Horas', font=('Helvetica', 14))],
+            [sg.Text('Nombre del estudiante:'), sg.Input(key='-STUDENT-')],
+            [sg.Text('Seleccionar actividad:')],
+            [sg.Listbox(activities_list, size=(40, 6), key='-ACTIVITY-')],
+            [sg.Text('Número de horas:'), sg.Input(key='-HOURS-')],
+            [sg.Button('Reducir Horas'), sg.Button('Cancelar')]
+        ]
+        return sg.Window('Reducir Horas', layout, finalize=True)
+
+    def chatbot_window(self):
+        layout = [
+            [sg.Text('ChatBot', font=('Helvetica', 14))],
+            [sg.Text('Nombre del estudiante:'), sg.Input(key='-STUDENT-')],
+            [sg.Output(size=(60, 20), key='-OUTPUT-')],
+            [sg.Input(key='-INPUT-', size=(45, 1)), sg.Button('Enviar'), sg.Button('Salir')]
+        ]
+        return sg.Window('ChatBot', layout, finalize=True)
+
+
 
 
 
