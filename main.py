@@ -100,4 +100,13 @@ class SapienciaGUI:
         ]
         return sg.Window('Eliminar Estudiante', layout, finalize=True)
 
+    def add_student_window(self):
+        layout = [
+            [sg.Text('Agregar Nuevo Estudiante', font=('Helvetica', 14))],
+            [sg.Text('Nombre del estudiante:'), sg.Input(key='-STUDENT-')],
+            [sg.Button('Agregar'), sg.Button('Cancelar')]
+        ]
+        return sg.Window('Agregar Estudiante', layout, finalize=True)
+
+
 
