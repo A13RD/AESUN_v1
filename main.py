@@ -108,5 +108,29 @@ class SapienciaGUI:
         ]
         return sg.Window('Agregar Estudiante', layout, finalize=True)
 
+    def student_hours_window(self):
+        layout = [
+            [sg.Text('Ver Horas de Estudiante', font=('Helvetica', 14))],
+            [sg.Text('Nombre del estudiante:'), sg.Input(key='-STUDENT-')],
+            [sg.Button('Ver Horas'), sg.Button('Cancelar')]
+        ]
+        return sg.Window('Ver Horas', layout, finalize=True)
+
+    def add_hours_window(self):
+        activities = self.activity_manager.view_activities()
+        activities_list = [f"{a.id}: {a.name}" for a in activities]
+
+        layout = [
+            [sg.Text('Agregar Horas', font=('Helvetica', 14))],
+            [sg.Text('Nombre del estudiante:'), sg.Input(key='-STUDENT-')],
+            [sg.Text('Seleccionar actividad:')],
+            [sg.Listbox(activities_list, size=(40, 6), key='-ACTIVITY-')],
+            [sg.Text('Número de horas:'), sg.Input(key='-HOURS-')],
+            [sg.Button('Agregar Horas'), sg.Button('Cancelar')]
+        ]
+        return sg.Window('Agregar Horas', layout, finalize=True)
+
+
+
 
 
